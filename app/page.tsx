@@ -87,6 +87,16 @@ export default function TriviaApp() {
 
   useEffect(() => { const t = setTimeout(() => setReady(true), 100); return () => clearTimeout(t) }, [])
 
+  useEffect(() => {
+    if (submitted) {
+      const t = setTimeout(() => {
+        // Redirección con parámetros UTM para analíticas
+        window.location.href = 'https://tecnoav.com/?utm_source=trivia_mundial&utm_medium=landing_page&utm_campaign=registro_trivia'
+      }, 2000)
+      return () => clearTimeout(t)
+    }
+  }, [submitted])
+
   const qIndex = screen - 2   // question index (0,1,2)
 
   function handleAnswer(idx: number) {
@@ -360,7 +370,12 @@ export default function TriviaApp() {
           Tu predicción <strong>{scoreEC} – {scoreCM}</strong> ha sido registrada.<br/>
           Mucha suerte, <strong>{form.nombre}</strong>.
         </p>
-        <p className={styles.thankMini}>Inteligencia que protege, confianza que impulsa.</p>
+        <div className={styles.loadingSpinner}>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
+            <path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" />
+          </svg>
+        </div>
+        <p className={styles.thankMini}>Estás siendo redirigido a tecnoav.com...</p>
       </div>
       </div>
     </div>

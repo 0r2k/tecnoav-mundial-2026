@@ -1,6 +1,10 @@
 /* ═══════════════════════════════════════════════
    KEYFRAMES (must live in the module file)
 ═══════════════════════════════════════════════ */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
 @keyframes neonFlicker {
   0%,100%  { opacity: 1;   filter: brightness(1) drop-shadow(0 0 8px #00d4ff) drop-shadow(0 0 20px #00ffee); }
   3%       { opacity: 0.2; filter: brightness(0.3); }
@@ -884,6 +888,18 @@
   color: var(--neon-cyan);
   opacity: 0.7;
   letter-spacing: 0.05em;
+}
+
+.loadingSpinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.loadingSpinner svg {
+  animation: spin 1s linear infinite;
+  color: var(--neon-cyan);
 }
 
 /* ═══════════════════════════════════════════════
