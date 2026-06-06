@@ -890,23 +890,68 @@
    RESPONSIVE
 ═══════════════════════════════════════════════ */
 @media (max-width: 640px) {
-  /* Intro */
-  .introCenter { gap: 20px; padding: 20px 16px; }
-  .matchBox { padding: 16px 18px; }
-  .matchRow { gap: 10px; }
-  .neonIcon img { max-width: 90px; }
+  /* ── Intro ── */
+  .introCenter { gap: 18px; padding: 16px 16px 24px; }
 
-  /* Inner screens shared */
+  /* Iconos neón: subirlos a las esquinas superiores, lejos del contenido */
+  .neonIcon {
+    top: 12px;
+    transform: none;
+  }
+  .neonLeft  { left: 8px; }
+  .neonRight { right: 8px; }
+  .neonIcon img { max-width: 64px; }
+
+  /* Match box: apilar países verticalmente */
+  .matchBox { padding: 16px 20px; }
+  .matchRow {
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+  }
+  /* Primer equipo (Ecuador): bandera arriba, nombre abajo */
+  .teamBlock {
+    flex-direction: column !important;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 8px;
+  }
+  /* Último equipo (Costa de Marfil): column-reverse → bandera arriba también */
+  .teamBlock:last-child {
+    flex-direction: column-reverse !important;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 8px;
+  }
+  .teamName {
+    font-size: 0.82rem;
+    white-space: normal !important;
+    letter-spacing: 0.03em;
+    text-align: center;
+    line-height: 1.2;
+  }
+  .teamBlock img, .teamBlock:last-child img {
+    width: 62px !important;
+    height: auto !important;
+  }
+  .vsBlock {
+    font-size: 1.8rem;
+    animation: none;
+  }
+
+  /* ── Inner screens shared ── */
   .innerContent { padding: 24px 16px 40px; gap: 18px; }
   .innerLogo { width: min(300px, 85vw) !important; }
 
-  /* Cards */
+  /* ── Cards ── */
   .questionCard, .formCard, .scoreCard, .thankCard { padding: 24px 18px; }
 
-  /* Progress */
+  /* ── Progress ── */
   .progressWrap { gap: 10px; }
 
-  /* Score */
+  /* ── Score pickers ── */
   .scorePickers { gap: 12px; }
   .scoreSep { font-size: 2rem; }
 }
