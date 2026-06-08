@@ -84,6 +84,7 @@ export default function TriviaApp() {
   const [formError, setFormError] = useState('')
   const [sending, setSending] = useState(false)
   const [sendError, setSendError] = useState('')
+  const [acceptedTerms, setAcceptedTerms] = useState(false)
 
   useEffect(() => { const t = setTimeout(() => setReady(true), 100); return () => clearTimeout(t) }, [])
 
@@ -113,10 +114,33 @@ export default function TriviaApp() {
 
   function handleRegister(e: React.FormEvent) {
     e.preventDefault()
+    
     if (!form.empresa || !form.nombre || !form.email) {
       setFormError('Por favor completa los campos requeridos.')
       return
     }
+
+    const nameWords = form.nombre.trim().split(/\s+/)
+    if (nameWords.length < 2) {
+      setFormError('Por favor ingresa tu nombre y apellido (al menos 2 palabras).')
+      return
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(form.email)) {
+      setFormError('Por favor ingresa un correo electrónico válido.')
+      return
+    }
+
+    if (form.celular.trim()) {
+      const cleanPhone = form.celular.replace(/[\s-]/g, '')
+      const phoneRegex = /^(?:\+593|0)9\d{8}$/
+      if (!phoneRegex.test(cleanPhone)) {
+        setFormError('El celular debe tener formato válido de Ecuador (ej: 0991234567 o +593991234567).')
+        return
+      }
+    }
+
     setFormError('')
     setScreen(2)
   }
@@ -334,8 +358,34 @@ export default function TriviaApp() {
               <ScorePicker label="Costa de Marfil" flag="/assets/bandera-costademarfil.webp" value={scoreCM} onChange={setScoreCM} />
             </div>
 
+            <div className={styles.termsBox}>
+              <h3 className={styles.termsTitle}>Protección de Datos Personales</h3>
+              <p className={styles.termsText}>
+                TECNOAV Tecnología Avanzada S.A.S, como responsable del tratamiento de datos personales, informa que los datos proporcionados a través de este formulario serán utilizados para gestionar su solicitud, enviar información comercial, invitaciones a eventos, contenidos de interés y comunicaciones relacionadas con nuestros productos y servicios tecnológicos.
+              </p>
+              <p className={styles.termsText}>
+                Sus datos serán tratados de forma confidencial y no serán compartidos con terceros, salvo obligación legal o cuando sea necesario para cumplir las finalidades descritas y conforme a la normativa aplicable.
+              </p>
+              <p className={styles.termsText}>
+                Usted podrá ejercer sus derechos de acceso, rectificación, actualización, eliminación, oposición, portabilidad y revocación del consentimiento enviando una solicitud al correo info@tecnoav.com.
+              </p>
+              <p className={styles.termsText}>
+                Para más información sobre el tratamiento de sus datos personales, consulte nuestra <a href="https://www.tecnoav.com/politica-privacidad" target="_blank" rel="noopener noreferrer" className={styles.termsLink}>Política de Privacidad</a>.
+              </p>
+            </div>
+
+            <label className={styles.termsCheckboxLabel}>
+              <input
+                type="checkbox"
+                checked={acceptedTerms}
+                onChange={(e) => setAcceptedTerms(e.target.checked)}
+                className={styles.termsCheckbox}
+              />
+              <span>Acepto los términos y condiciones</span>
+            </label>
+
             {sendError && <p className={styles.formError}>{sendError}</p>}
-            <button className={styles.submitBtn} onClick={handleSubmit} disabled={sending}>
+            <button className={styles.submitBtn} onClick={handleSubmit} disabled={sending || !acceptedTerms}>
               <span>{sending ? 'ENVIANDO…' : 'ENVIAR PARTICIPACIÓN'}</span>
               {!sending && (
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">

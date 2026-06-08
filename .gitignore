@@ -1,4 +1,5 @@
 node_modules
+.claude
 .next
 .pnpm-store
 .DS_Store
